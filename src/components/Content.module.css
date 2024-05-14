@@ -1,0 +1,18 @@
+.main {
+  min-height: 100vh;
+  background-image: url("https://images.wallpaperscraft.ru/image/single/minimalizm_nebo_oblaka_95458_1920x1080.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.centerForm {
+  border: 1px solid black;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 5px;
+  padding: 10px;
+  min-width: 400px;
+  color: var(--grayColor);
+}
