@@ -3,11 +3,69 @@ export const daiAbi = [
     constant: false,
     inputs: [
       {
-        name: "x",
-        type: "uint256",
+        name: "a",
+        type: "int256",
+      },
+      {
+        name: "b",
+        type: "int256",
       },
     ],
-    name: "set",
+    name: "add",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        name: "a",
+        type: "int256",
+      },
+      {
+        name: "b",
+        type: "int256",
+      },
+    ],
+    name: "divide",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        name: "a",
+        type: "int256",
+      },
+      {
+        name: "b",
+        type: "int256",
+      },
+    ],
+    name: "multiply",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        name: "a",
+        type: "int256",
+      },
+      {
+        name: "b",
+        type: "int256",
+      },
+    ],
+    name: "subtract",
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
@@ -16,11 +74,11 @@ export const daiAbi = [
   {
     constant: true,
     inputs: [],
-    name: "get",
+    name: "result",
     outputs: [
       {
         name: "",
-        type: "uint256",
+        type: "int256",
       },
     ],
     payable: false,
