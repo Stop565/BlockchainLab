@@ -5,15 +5,13 @@ import { daiAbi as ABI } from "../assets/values";
 import { Preloader } from "./Preloader/Preloader";
 import st from "./Content.module.css";
 
+import Form from "react-bootstrap/Form";
+import { Container, Col, Card } from "react-bootstrap";
+
 export const Content = () => {
-  const [value1, setValue1] = useState(1);
-  const [value2, setValue2] = useState(1);
-  const [value, setValue] = useState({ a: "7", b: "8" });
+  const [res, setRes] = useState(false);
 
-  const [res, setRes] = useState(0);
-  const [operation, setOperation] = useState("add");
-
-  const [adress, setAdress] = useState("0x9221cF19575265fca6cf413944ccD4497E456ccB");
+  const [adress, setAdress] = useState("0x64a8538a4EFF9ac80249D23F964b0a17D7ce171C");
   const [isFetching, setIsfetching] = useState(false);
 
   let provider;
@@ -40,7 +38,8 @@ export const Content = () => {
         daiContract = new ethers.Contract(adress, ABI, await provider.getSigner());
       }
       //викликати функцію getCount() у контракта
-      setRes(Number(await daiContract.result()));
+      setRes(await daiContract.isSubscriberActive());
+      console.log(res);
       //встановити флаг закінчення операції
       setflag(true);
     })();
@@ -50,13 +49,13 @@ export const Content = () => {
     setIsfetching(true);
     console.log(operFunc, value1, value2);
     try {
-      if (operFunc === "add") await (await daiContract.add(value1, value2)).wait();
-      if (operFunc === "divide") await (await daiContract.divide(value1, value2)).wait();
-      if (operFunc === "multiply") await (await daiContract.multiply(value1, value2)).wait();
-      if (operFunc === "subtract") await (await daiContract.subtract(value1, value2)).wait();
+      //if (operFunc === "add") await (await daiContract.add(value1, value2)).wait();
+      //if (operFunc === "divide") await (await daiContract.divide(value1, value2)).wait();
+      //if (operFunc === "multiply") await (await daiContract.multiply(value1, value2)).wait();
+      //if (operFunc === "subtract") await (await daiContract.subtract(value1, value2)).wait();
 
       //await (await daiContract.add(`a:${Number(value1)}, b:${Number(value2)}`)).wait();
-      setRes(Number(await daiContract.result()));
+      setRes(await daiContract.isSubscriberActive());
       setflag(false);
     } catch (e) {
       console.log(e);
@@ -64,23 +63,36 @@ export const Content = () => {
     }
     setIsfetching(false);
   };
+  const getUserCheck = async (ad) => {
+    try {
+      ethers.getAddress(ad);
+      const rez = await daiContract.subscribers(ad);
+      console.log(rez["2"] + " - Ви підписані");
+      alert(rez["2"]);
+    } catch (e) {
+      console.log(e);
+      alert("Ви не підписані або адрес не вірний");
+    }
+  };
 
   return isFetching ? (
     <Preloader />
   ) : (
-    <div className="Content">
-      <main className={st.main}>
-        <div className={st.centerForm}>
-          <InputAdress value={adress} setValue={setAdress} />
-          <GetSetValue
-            value={res}
-            setValue1={btnClick}
-            //setValue2={btnClick}
-            //setOperation={btnClick}
-            readOnly={readOnly}
-          />
-        </div>
-      </main>
-    </div>
+    <Container
+      className="d-flex justify-content-center align-items-center mt=100px"
+      style={{ height: window.innerHeight - 54 }}
+    >
+      <Card style={{ width: 600 }} className="p-5">
+        <InputAdress value={adress} setValue={setAdress} />
+        <GetSetValue
+          value={res}
+          setValue1={btnClick}
+          //setValue2={btnClick}
+          //setOperation={btnClick}
+          readOnly={readOnly}
+          getUserCheck={getUserCheck}
+        />
+      </Card>
+    </Container>
   );
 };
