@@ -11,7 +11,7 @@ import { Container, Col, Card } from "react-bootstrap";
 export const Content = () => {
   const [res, setRes] = useState(false);
 
-  const [adress, setAdress] = useState("0x64a8538a4EFF9ac80249D23F964b0a17D7ce171C");
+  const [adress, setAdress] = useState("0xd411d18D42af039e153cC898c118B9C4D6072962");
   const [isFetching, setIsfetching] = useState(false);
 
   let provider;
@@ -63,6 +63,7 @@ export const Content = () => {
     }
     setIsfetching(false);
   };
+
   const getUserCheck = async (ad) => {
     try {
       ethers.getAddress(ad);
@@ -72,6 +73,33 @@ export const Content = () => {
     } catch (e) {
       console.log(e);
       alert("Ви не підписані або адрес не вірний");
+    }
+  };
+
+  const subscribe = async (ad) => {
+    try {
+      ethers.getAddress(ad);
+      const rez = await daiContract.subscribe(0);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const unsubscribe = async (ad) => {
+    try {
+      ethers.getAddress(ad);
+      const rez = await daiContract.unsubscribe();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const makePay = async (ad) => {
+    try {
+      ethers.getAddress(ad);
+      const rez = await daiContract.makePayment();
+    } catch (e) {
+      console.log(e);
+      alert("Ще не можна оплатити підписку...");
     }
   };
 
@@ -91,6 +119,9 @@ export const Content = () => {
           //setOperation={btnClick}
           readOnly={readOnly}
           getUserCheck={getUserCheck}
+          subscribe={subscribe}
+          unsubscribe={unsubscribe}
+          makePay={makePay}
         />
       </Card>
     </Container>
